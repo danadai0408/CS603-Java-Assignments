@@ -1,0 +1,129 @@
+/**This is a program that calculates college costs for a two- or
+ * four-year public (in-state or out-of-state) college.
+ * 
+ * @author dannadai
+ * CS603-Assignment 2
+ *
+ */
+import java.util.Scanner;
+
+public class YearlyTuition_Updated {
+	
+	public static void main(String args[]){  
+		   
+    Scanner kb = new Scanner (System.in);
+    
+    final int TWOYEAR_TUITION = 3440; 
+    final int TWOYEAR_ROOM = 7050; 
+    final int FOURYEAR_IN_TUITION = 9410; 
+    final int FOURYEAR_IN_ROOM = 10174; 
+    final int FOURYEAR_OUT_TUITION = 23890; 
+    final int FOURYEAR_OUT_ROOM = 10500; // define constants
+    
+    int program,state = 0,tuitiontype;
+    double gpa, sat, aid, netcost, totalcost=0,tuition = 0,rmfees = 0;
+    int count1 = 0,count2 = 0,count3 = 0,count4 = 0,count5 = 0;// declare and initialize variables
+    
+  // prompt the user to enter the program type until the input is valid
+   do{ 
+	   if (count1 != 0) System.out.println("Invalid number of years.");
+	   System.out.println("Enter 2 for two-year program or 4 for a four-year program: ");;
+	   program = kb.nextInt();
+	   count1 ++;
+      } while(program != 2 && program != 4);
+  // prompt the user to enter the value for in-/out-state until the input is valid
+   do{ 
+	   if (program == 2) break;
+	   if (count2 != 0) System.out.println("Invalid value for type of district.");
+	   System.out.println("Enter 1 for in-state or 2 for out-of-state: ");
+	   state = kb.nextInt();
+	   count2 ++;
+      } while(state !=1 && state != 2);
+  // prompt the user to enter the value for tuition only or full cost until the input is valid
+   do{ 
+	   if (count3 != 0) System.out.println("Invalid value for type of tuition.");
+	   System.out.println("Enter 1 for tuition and fees only or 2 for full cost: ");
+	   tuitiontype = kb.nextInt();
+	   count3 ++;
+      } while(tuitiontype != 1 && tuitiontype != 2);
+  // prompt the user to enter GPA until the input is valid
+   do{ 
+	   if (count4 != 0) System.out.println("Invalid GPA.");
+	   System.out.println("Enter a weighted GPA between 2 and 20: ");
+	   gpa = kb.nextDouble();
+	   count4 ++;
+      } while(gpa < 2||gpa > 20);
+  // prompt the user to enter SAT score until the input is valid
+   do{ 
+	   if (count5 != 0) System.out.println("Invalid SAT score.");
+	   System.out.println("Enter a combined SAT score between 400 and 1600: ");
+	   sat = kb.nextDouble();
+	   count5 ++;
+      } while(sat < 400||sat > 1600);
+   
+       /*
+        * If the program is a 2-year program, calculate the merit aid with linear relationship
+    	 * with GPA and SAT scores
+    	 * by calling getMin function
+    	 * and define the tuition and room fees. 
+    	 */
+    if (program == 2) {
+    	aid = getMin(((sat - 1350) / 50 * 500 + 600), ((gpa - 6) * 500 + 600), 2100, 600);
+    	tuition = TWOYEAR_TUITION;
+		rmfees = TWOYEAR_ROOM;	
+    }
+
+    if (program == 4) {
+    	/*
+    	 * If the program is a 4-year in-state program, calculate the merit aid with linear relationship
+    	 * with GPA and SAT scores
+    	 * by calling getMin function
+    	 * and define the tuition and room fees. 
+    	 */
+    	if (state == 1){
+    		aid = getMin(((sat - 1435) / 35 * 1000 + 2200), ((gpa - 9) / 3 * 1000 + 2200), 5200, 2200);
+    		tuition = FOURYEAR_IN_TUITION;
+    		rmfees = FOURYEAR_IN_ROOM;
+    	}
+    	/*
+    	 * If the program is a 4-year out-state program, calculate the merit aid with linear relationship
+    	 * with GPA and SAT scores
+    	 * by calling getMin function
+    	 * and define the tuition and room fees. 
+    	 */
+    	if (state == 2){
+        	aid = getMin(((sat - 1450) / 50 * 1200 + 6400), ((gpa - 10) / 4 * 1200 + 6400), 8800, 6400);
+        	tuition = FOURYEAR_OUT_TUITION;
+        	rmfees =  FOURYEAR_OUT_ROOM;
+        	}
+    }
+    
+    if (tuitiontype == 1) totalcost = tuition;
+	else totalcost = tuition + rmfees;// for full cost, calculate the total cost by adding tuition and room fees.
+    
+    netcost = totalcost - aid;// calculate the net cost by subtracting merit aid from total cost.
+    
+   // format the outputs to 2 decimal places and include a dollar sign and commas.
+	System.out.printf("\nCost of 1 year of college: $%,.2f", totalcost);
+	System.out.printf("\nAmount of merit aid: $%,.2f", aid);
+	System.out.printf("\nNet cost: $%,.2f", netcost); 
+
+	
+	kb.close();
+	
+   } 
+	
+	/* get the minimal one between a and b 
+     * if the minimal > c , set it to c;
+	 * if the minimal < d , set it to 0.
+	 */
+	public static double getMin(double a, double b, double c, double d) {
+		double e = a < b ? a : b;
+		if (e > c) e = c;
+		if (e < d) e = 0;
+		return e;
+		 } 
+	
+}
+     
+
