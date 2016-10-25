@@ -113,9 +113,12 @@ public class YearlyTuition_Updated {
 	
    } 
 	
-	/* get the minimal one between a and b 
-     * if the minimal > c , set it to c;
-	 * if the minimal < d , set it to 0.
+	/* To get the minimal one between a and b,
+	 * a is what amount of merit aid we can get if we meet certain requirements of SAT scores, 
+	 * b is what amount of merit aid we can get if we meet certain requirements of GPA,
+	 * which means we must meet both requirements for a certain amount of merit aid.
+         * if the minimal > c (which is the upperlimit of merit aid for a certain college type), set it to c;
+	 * if the minimal < d (which is the bottomline of merit aid for a certain college type), set it to 0.
 	 */
 	public static double getMin(double a, double b, double c, double d) {
 		double e = a < b ? a : b;
