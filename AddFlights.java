@@ -1,15 +1,17 @@
 /**CS603 - Assignment 4
- * This	class has a	single main method that provides the following functionalities with Object Flight
+ * This	class has a single main method that provides the following functionalities with Object Flight
  * @author Danna Dai
  *
  */
 import java.util.Scanner;
 
 public class AddFlights {
+	static Scanner input = new Scanner(System.in);
+
 	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);
 		Flight[] flightArray = new Flight[2];// define an array of type Flight
 												// of size 2
+
 		/**
 		 * Prompt the user for the information required to create a Flight
 		 * object in the following order: flight code, departure city, arrival
@@ -21,11 +23,8 @@ public class AddFlights {
 			String to;
 			int length;
 			boolean changed = false;
-
 			System.out.print(
 					"Please enter a flight code that begins with two letters followed by a space and then 2 to 4 digits: ");
-			if (i != 0)
-				input.next();
 			flightCode = input.nextLine();
 
 			System.out.print("Enter the departure city: ");
@@ -36,6 +35,7 @@ public class AddFlights {
 
 			System.out.print("Enter the flight duration in minutes: ");
 			length = input.nextInt();
+			input.nextLine();//to skip over the \n after the number that is entered
 			/**
 			 * Create the Flight object with the values input by the user and
 			 * print its description
@@ -55,7 +55,6 @@ public class AddFlights {
 			 */
 			while (Flight.validateCode(flight.getFlightCode()).equals("Unassigned")) {
 				System.out.print("The flight code for the newly created flight is invalid. Please re-enter: ");
-				input.next();
 				flightCode = input.nextLine();
 				flight.setFlightCode(flightCode);
 				changed = true;
@@ -70,16 +69,17 @@ public class AddFlights {
 			flightArray[i] = flight;
 			// store the two Flight objects to
 			// an array of type Flight
+
 		}
 		/**
 		 * Print if the first Flight object connects to the second Flight
 		 * object, making use of the connectsTo() method.
 		 */
-		if (flightArray[1].connectsTo(flightArray[0]))
+		if (flightArray[0].connectsTo(flightArray[1])||flightArray[1].connectsTo(flightArray[0]))
 			System.out.println("The two flights are connecting.");
 		else
 			System.out.println("The two flights are not connecting.");
-		input.close();
+
 	}
 
 }
