@@ -1,6 +1,6 @@
 
 /**CS603 - Assignment 4
- * Define a	class called Flight	for	representing an	airline	flight with the	following private instance variables,
+ * Define a class called Flight	for representing an airline flight with the following private instance variables,
  * define constructors and getter/setter/functional methods	
  * @author Danna Dai
  *
